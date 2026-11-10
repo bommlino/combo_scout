@@ -28,5 +28,15 @@ MVP = event data only (passes + shots). Runs ("Laufwege") need tracking or 360 f
 3. **Evals:** a fixed set of ~30 questions with expected answers/numbers; graded automatically (exact numbers) + LLM-as-judge for report quality. Track cost + latency.
 4. **Deploy:** small web app (FastAPI + simple UI) in a container; logging of questions, tool calls, answers.
 
+## Quick start
+```
+python -m venv .venv && .venv/Scripts/pip install -r requirements.txt
+python tools/get_statsbomb.py 55 282          # UEFA Euro 2024 → data/
+python src/combos.py "data/events/*.json"     # → out/units.csv, out/dependency.csv
+python -m pytest -q
+```
+
 ## Status
-See `PLAN.md`. Step 1 (combination extraction from events) is scaffolded in `src/combos.py`.
+Phases 1–2 done (pairs/trios with per-90 xG, progression, box entries, one-twos, quick layoffs, dependency). Next: phase 3, the LLM layer. See `PLAN.md`.
+
+Data: StatsBomb Open Data – thanks to StatsBomb (Hudl) for making it available.

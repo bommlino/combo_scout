@@ -4,14 +4,18 @@ Goal for Thomas: a real, shipped LLM application with evals that he can show in 
 Budget: ~4 weeks, evenings. Keep it small; every step ends with something that runs.
 
 ## Phase 1 – combinations from event data (week 1)
-- [ ] Get StatsBomb open data for ONE competition (e.g. a recent men's tournament or a league season) → `data/` (not committed). Script: `tools/get_statsbomb.py` (ask before downloading).
-- [ ] `src/combos.py`: possession → chains of completed passes → pairs/trios with chains, shots, xG, goals. Sanity-check against matches you know.
-- [ ] Output `out/units.csv` + a first look: top duos/trios per team.
+- [x] StatsBomb open data: UEFA Euro 2024 (55/282, 51 matches, 120 MB) → `data/` (2026-11-10).
+- [x] `src/combos.py`: possession → chains of completed passes → pairs/trios with chains, shots, xG, goals.
+- [x] Output `out/units.csv` + first look (8,634 chains, 23,680 units).
 
-## Phase 2 – better metrics (week 2)
-- [ ] Progression (distance gained to goal), zone of final pass, one-two and third-man flags.
-- [ ] Normalise per 90 minutes the players were on the pitch together (minutes-together from lineups/substitutions).
-- [ ] Dependency: share of a team's xG that runs through a player's combinations.
+## Phase 2 – better metrics (week 2) – done 2026-11-10
+- [x] Progression (distance gained to goal), box entries, one-two flag, attacking quick layoffs (≤3 s, ball into final third).
+- [x] Minutes together (starting XI, subs, red cards) → per-90 values; top lists only with ≥180 min together.
+- [x] Dependency: share of a team's chain-xG that runs through a player (`out/dependency.csv`).
+- [x] Open play only: corners / free kicks into the final third break chains; penalties never credited.
+- [x] Tests: `python -m pytest -q` (synthetic events).
+- [ ] Sanity check with a football eye: does the top list match what you saw at the Euro? (Thomas)
+- [ ] Ideas: zone of the final pass per unit, xT instead of distance, 360 freeze frames (defenders bypassed).
 
 ## Phase 3 – LLM layer (week 3)
 - [ ] 4–5 typed tools over the unit table; LLM with tool use answers questions.
